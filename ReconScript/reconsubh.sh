@@ -1,13 +1,18 @@
 #!/bin/bash
 
+
+##### Author: subh #####
+##
+
 ##taking input from the user
 read -p "Enter the name of the target? " targetName
 
 ##extracting subdomains
 assetfinder --subs-only $targetName | tee subdomains1.txt
 subfinder -d $targetName | tee subdomains2.txt
+sublist3r -d $targetName | tee subdomains3.txt
 
-cat subdomains1.txt subdomains2.txt | tee finalSubdomains.txt
+cat subdomains1.txt subdomains2.txt subdomains3.txt | tee finalSubdomains.txt
 rm -rf subdomains1.txt subdomains2.txt
 
 ## filterinig subdomains and fetching live domains
@@ -33,4 +38,3 @@ mv finalSubdomains.txt liveSubdomains.txt urls.txt gfxss.txt gfssrf.txt gfserver
 
 
 ### Done This is Ending #######
-### Author: Shubham Dhungana #####
