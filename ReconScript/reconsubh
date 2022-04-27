@@ -46,12 +46,14 @@ echo "Enjoy the automation"
 # aquatone
 echo " "
 echo " Screenshotting subdomains using aquatone"
-aquatone < $DIRECTORY/assetfinder.txt
+cd $DIRECTORY
+aquatone < assetfinder.txt
+cd ..
 echo " Aquatone Completed"
 
 # waybackurls
 echo " "
-waybackurls < assetfinder.txt | tee $DIRECTORY/waybackurls.txt
+waybackurls < $DIRECTORY/assetfinder.txt | tee $DIRECTORY/waybackurls.txt
 echo " Fetched all the urls. Completed"
 echo " All Done"
 
