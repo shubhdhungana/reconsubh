@@ -49,3 +49,10 @@ echo " Screenshotting subdomains using aquatone"
 aquatone < $DIRECTORY/assetfinder.txt
 echo " Aquatone Completed"
 
+# waybackurls
+echo " "
+waybackurls < assetfinder.txt | tee $DIRECTORY/waybackurls.txt
+echo " Fetched all the urls. Completed"
+echo " All Done"
+
+
