@@ -1,0 +1,51 @@
+#!/bin/bash
+
+PATH_TO_DIRSEARCH="/root/Downloads/Software/githubtools_bugbounty/dirsearch"
+
+PATH_TO_SUBLIST3R="/root/Downloads/Software/githubtools_bugbounty/Sublist3r"
+
+
+DOMAIN=$1
+DIRECTORY=${DOMAIN}_recon
+echo "Creating directory $DIRECTORY"
+mkdir $DIRECTORY 
+
+# sublist3r subdomain enumeration 
+$PATH_TO_SUBLIST3R/sublist3r.py -d $DOMAIN | tee  $DIRECTORY/sublist3r.txt
+echo " "
+echo "The results of sublist3r are stored in $DIRECTORY/sublist3r"
+echo " "
+# assetfinder subdomain enumeration
+assetfinder -subs-only $DOMAIN | tee $DIRECTORY/assetfinder.txt
+echo "The results of assetfinder has been produced in $DIRECTORY/assetfinder"
+echo " " 
+
+# combining subdomains files
+echo " "
+echo " "
+echo "Combining subdomains of sublist3r and assetfinder into one fiile called finalsubdomains"
+cat $DIRECTORY/sublist3r.txt $DIRECTORY/assetfinder.txt > $DIRECTORY/SubdomainsAll.txt 
+echo " "
+
+# nmap
+nmap $DOMAIN > $DIRECTORY/nmap.txt
+echo " "
+echo "The results of nmap scan are stored in $DIRECTORY/nmap.txt."
+echo " "
+
+# nmap grep
+grep -E "^\S+\s+\S+\s+\S+$" $DIRECTORY/nmap.txt > $DIRECTORY/nmap_cleaned.txt
+
+# dirsearch
+$PATH_TO_DIRSEARCH/dirsearch.py -u $DOMAIN -e php | tee $DIRECTORY/dirsearch.txt
+echo " "
+echo " "
+echo "The output of the dirsearch is stored in $DOMAIN/dirsearch.txt"
+echo "Enjoy the automation"
+
+# aquatone
+echo " "
+echo " Screenshotting subdomains using aquatone"
+aquatone < $DIRECTORY/assetfinder.txt
+echo " Aquatone Completed"
+
