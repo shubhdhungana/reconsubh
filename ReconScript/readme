@@ -1,0 +1,24 @@
+see reconsubhTest which is being updated frequently with more tools being added.
+
+Keep in mind, it just doesn't work like magic out of this air. First of all need to dowload the below listed tool properly in your unix kernel.
+
+Download these tools properly in your unix kernel via google/youtube tutorials. It's easy:
+i) Assetfinder
+ii) Subfinder
+iii) Sublist3r
+iv) nmap
+v) Aquatone
+vi) Waybackurls
+
+Download these above tools in your very unix kernel. Make sure it works fine. You can watch youtube tutorials. It's easy. Then run my script.
+
+Follow the steps as shown in the example.
+-----------------------------------------------------------------------
+Example:
+[ Suppose you downloaded reconsubhTest Script in your desktop folder ]
+Then,
+In cmd,
+i) chmod u+x reconsubhTest [ This cmd will give executable permission to the script ] 
+ii) reconsubhTest facebook.com [ This will start hacking facebook.com ]
+
+-------------------------------------------------------------------------
