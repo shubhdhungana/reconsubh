@@ -1,4 +1,4 @@
-see reconsubhTest which is being updated frequently with more tools being added.
+See reconsubhTest which is being updated frequently with more tools being added.
 
 Keep in mind, it just doesn't work like magic out of thin air. First of all need to dowload the below listed tool properly in your unix kernel.
 
@@ -22,3 +22,13 @@ i) chmod u+x reconsubhTest [ This cmd will give executable permission to the scr
 ii) reconsubhTest facebook.com [ This will start hacking facebook.com ]
 
 -------------------------------------------------------------------------
+
+Bonus Section:
+--------------
+I recommend not to use this tool just to find bugs incase if you're just starting to do Web Application Testing, Pentesting, Bug Bounty Hunting, etc.
+Even if you use that tool and you get the fascinating result, it doesn't impact much. If you don't know the basic of networking, programming and web
+app workflow mechanism, it'd be completely waste.
+
+So, my suggestion is first we need to have a deeper understanding of web application workflow, networking, client-server concept before starting out.
+Read books like "Bug Bounty Bootcamp by Vickie li", "Web Application Hackers Handbook", "Real-World Bug Hunting: A Field Guide to Web Hacking". These 
+books will give you the deeper concept of web application workflow, its mechanisms. You'd figure it out yourself how to exploit it.
