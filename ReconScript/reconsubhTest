@@ -64,4 +64,10 @@ waybackurls < $DIRECTORY/subdomains.txt | tee $DIRECTORY/waybackurls.txt
 echo " Fetched all the urls. Completed"
 echo " All Done"
 
+# ffuf for multiple subdomains
+echo " " 
+echo " Running ffuf for multiple subdomains "
+echo " "
+ffuf -w seclist-beginner/beginner-payloads/Information\ Disclosure\ -01/Sensitive-Directory-list/Infodisclosure_Sensitive-list-1.txt:FUZZ -w $DIRECTORY/subdomains.txt:URL -u URLFUZZ -mc 200 -of csv -o ffuf-result.txt
+
 
