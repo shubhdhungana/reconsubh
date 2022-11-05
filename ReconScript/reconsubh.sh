@@ -61,23 +61,49 @@ echo "Gau done"
 echo "Now, arranging content discovery files"
 cat $DIRECTORY/wayback.txt $DIRECTORY/gau.txt | sort -u | tee $DIRECTORY/urls.txt
 rm -rf $DIRECTORY/wayback.txt $DIRECTORY/gau.txt
-echo " Done "
+cat $DIRECTORY/urls.txt | uro | httpx -mc 200 | tee $DIRECTORY/live_urls.txt
+cat $DIRECTORY/live_urls.txt | grep “.php” | cut -f1 -d”?” | sed ‘s:/*$::’ | sort -u | tee $DIRECTORY/php_endpoints_urls.txt
 
+#Gather jsfilesurls
+cat $DIRECTORY/live_urls.txt | grep ".js$" | uniq | sort | tee $DIRECTORY/Jsurlsfiles1.txt
+echo " "
+cat $DIRECTORY/live_urls.txt | subjs | sort -u | tee $DIRECTORY/Jsurlsfiles2.txt
+cat $DIRECTORY/Jsurlsfiles1.txt $DIRECTORY/Jsurlsfiles2.txt | sort -u | tee $DIRECTORY/js_urls_files.txt
+rm -rf $DIRECTORY/Jsurlsfiles1.txt $DIRECTORY/Jsurlsfiles2.txt
+echo "js files scan completed"
 
-# fff
-cat $DIRECTORY/urls.txt | fff | tee $DIRECTORY/liveUrls.txt
-cat $DIRECTORY/liveUrls.txt | grep js | tee $DIRECTORY/liveJs.txt
+#linkfinder
+echo "Now linkfinder"
+echo " "
+cat $DIRECTORY/js_urls_files.txt | while read url; do python3 /root/Desktop/automation_embedded_tools/LinkFinder.py -d -i $url -o cli | tee js_endpoints.txt
+echo " "
+echo "linkfinder completed"
+
 
 # gf pattern filter
-cat $DIRECTORY/liveUrls.txt | gf xss | tee $DIRECTORY/gfxss.txt
-cat $DIRECTORY/liveUrls.txt | gf ssrf | tee $DIRECTORY/gfssrf.txt
-cat $DIRECTORY/liveUrls.txt | gf upload-fields | tee $DIRECTORY/gfupload.txt
-cat $DIRECTORY/liveUrls.txt | gf sqli | tee $DIRECTORY/gfsqli.txt
-cat $DIRECTORY/liveUrls.txt | gf redirect | tee $DIRECTORY/gfredirect.txt
-cat $DIRECTORY/liveUrls.txt | gf rce | tee $DIRECTORY/gfrce.txt
-cat $DIRECTORY/liveUrls.txt | gf idor | tee $DIRECTORY/gfidor.txt
-cat $DIRECTORY/liveUrls.txt | gf lfi | tee $DIRECTORY/gflfi.txt
+cat $DIRECTORY/live_urls.txt | gf xss | tee $DIRECTORY/gfxss.txt
+cat $DIRECTORY/live_urls.txt | gf ssrf | tee $DIRECTORY/gfssrf.txt
+cat $DIRECTORY/live_urls.txt | gf upload-fields | tee $DIRECTORY/gfupload.txt
+cat $DIRECTORY/live_urls.txt | gf sqli | tee $DIRECTORY/gfsqli.txt
+cat $DIRECTORY/live_urls.txt | gf redirect | tee $DIRECTORY/gfredirect.txt
+cat $DIRECTORY/live_urls.txt | gf rce | tee $DIRECTORY/gfrce.txt
+cat $DIRECTORY/live_urls.txt | gf idor | tee $DIRECTORY/gfidor.txt
+cat $DIRECTORY/live_urls.txt | gf lfi | tee $DIRECTORY/gflfi.txt
 echo " "
 mkdir $DIRECTORY/gfTool
 mv $DIRECTORY/gfxss.txt $DIRECTORY/gfssrf.txt $DIRECTORY/gfupload.txt $DIRECTORY/gfsqli.txt $DIRECTORY/gfredirect.txt $DIRECTORY/gfrce.txt $DIRECTORY/gfidor.txt $DIRECTORY/gflfi.txt $DIRECTORY/gfTool/
- 
+
+#dirsearch
+echo "Now dirsearch"
+python3 /root/Desktop/automation_embedded_tools/dirsearch/dirsearch.py -u www.$DOMAIN -o $DIRECTORY/dirsearchResult.txt
+
+# nuclei basic use
+echo "Now using nuclei tool"
+cat $DIRECTORY/livesubdomains.txt | nuclei -c 100 -silent -t /root/Desktop/automation_embedded_tools/nuclei-templates/ | tee $DIRECTORY/Nucleiresults.txt
+
+
+
+
+
+
+
